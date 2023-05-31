@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('doc_template_id');
+            $table->foreignId('doc_template_id');
             $table->string('name');
             $table->string('category');
             $table->text('text');

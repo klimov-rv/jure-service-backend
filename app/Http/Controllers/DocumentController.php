@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DocumentResource;
 use App\Models\Document;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        return Document::all();
+        return DocumentResource::collection(Document::all());
     }
 
     /**
@@ -36,7 +37,7 @@ class DocumentController extends Controller
      */
     public function show($id)
     {
-        return Document::find($id);
+        return new DocumentResource(Document::findOrFail($id));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DocTemplateResource;
 use App\Models\DocTemplate;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class DocTemplateController extends Controller
      */
     public function show($id)
     {
-        return DocTemplate::find($id);
+        return new DocTemplateResource(DocTemplate::with('docs')->findOrFail($id)); 
     }
 
     /**
