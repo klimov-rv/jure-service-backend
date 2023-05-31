@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            // TODO проверить связь "один ко многим"
+            // TODO relations docTemplates hasMany Documents
             $table->foreignId('doc_template_id');
             $table->string('name');
             $table->string('category');
