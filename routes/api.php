@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Route; 
-use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\DocTemplateController;
+use App\Http\Controllers\Api\DocumentController;
+use App\Http\Controllers\Api\DocTemplateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +15,20 @@ use App\Http\Controllers\DocTemplateController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+ 
+Route::post('/auth/register', [AuthController::class, 'createUser']);
+Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-
-// Route::middleware('auth')->group(function () { 
-// });
+// Route::group(
+//     [
+//         'middleware' => 'auth:sanctum',
+//     ],
+//     static fn () =>
+//     Route::apiResources([ 
+//             'docs' => DocumentController::class,
+//             'doctemplates' => DocTemplateController::class,
+//     ])
+// );
 
 Route::apiResources([
     'docs' => DocumentController::class,
