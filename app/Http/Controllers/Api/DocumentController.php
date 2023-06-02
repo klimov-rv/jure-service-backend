@@ -21,7 +21,7 @@ class DocumentController extends Controller
      *     },
      *     @OA\Parameter(
      *         name="document",
-     *         in="query",
+     *         in="path",
      *         description="The document id",
      *         required=false,
      *         @OA\Schema(
