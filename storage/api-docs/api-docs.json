@@ -1,0 +1,77 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Doc-Configurator API",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://jure-service.start/",
+            "description": "Doc-Configurator host"
+        }
+    ],
+    "paths": {
+        "/docs": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Получить все документы",
+                "operationId": "documentsAll",
+                "parameters": [
+                    {
+                        "name": "document",
+                        "in": "query",
+                        "description": "The document id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Everything is fine",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Create Documents",
+                "operationId": "documentsCreate",
+                "responses": {
+                    "200": {
+                        "description": "Everything is fine"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Documents"
+        }
+    ]
+}

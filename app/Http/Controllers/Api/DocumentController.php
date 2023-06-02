@@ -10,6 +10,33 @@ use Illuminate\Http\Request;
 class DocumentController extends Controller
 {
     /**
+     * 
+     * @OA\Get(
+     *     path="/docs",
+     *     operationId="documentsAll",
+     *     tags={"Documents"},
+     *     summary="Получить все документы",
+     *     security={
+     *       {"api_key": {}},
+     *     },
+     *     @OA\Parameter(
+     *         name="document",
+     *         in="query",
+     *         description="The document id",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Everything is fine",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *         )
+     *     ),
+     * )
+     * 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -19,7 +46,20 @@ class DocumentController extends Controller
         return DocumentResource::collection(Document::all());
     }
 
-    /**
+     /**
+     * @OA\Post(
+     *     path="/docs",
+     *     operationId="documentsCreate",
+     *     tags={"Documents"},
+     *     summary="Create Documents",
+     *     security={
+     *       {"api_key": {}},
+     *     },
+     *     @OA\Response(
+     *         response="200",
+     *         description="Everything is fine",
+     *     ), 
+     * )
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
