@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Document;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +15,15 @@ class DocumentFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Document::class;
     public function definition()
     {
-        return [
-            //
+        return [   
+            'name' => $this->faker->name, 
+            'category' => $this->faker->name,
+            'text' => $this->faker->text(9999),
+            'status' => $this->faker->name,
+            'doc_template_id' => 1,
         ];
     }
 }
