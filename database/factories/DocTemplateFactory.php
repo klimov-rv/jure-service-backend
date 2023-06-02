@@ -2,22 +2,24 @@
 
 namespace Database\Factories;
 
+use App\Models\DocTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DocTemplate>
  */
-class DocTemplatesFactory extends Factory
+class DocTemplateFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
+    protected $model = DocTemplate::class;
     public function definition()
     {
-        return [
-            //
+        return [   
+            'title' => $this->faker->name,
         ];
     }
 }

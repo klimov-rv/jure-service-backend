@@ -13,7 +13,7 @@
     },
     "servers": [
         {
-            "url": "http://jure-service.start/",
+            "url": "http://localhost/api",
             "description": "Doc-Configurator host"
         }
     ],

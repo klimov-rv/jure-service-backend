@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Document;
+use App\Models\DocTemplate;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DocumentsSeeder extends Seeder
+class DocTemplatesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class DocumentsSeeder extends Seeder
      */
     public function run()
     {
-        Document::factory()->count(3)->create();
+        DocTemplate::factory()->count(3)->create();
     }
 }
