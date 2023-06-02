@@ -23,12 +23,9 @@ use Illuminate\Support\Facades\Validator;
  *             url="http://www.apache.org/licenses/LICENSE-2.0.html"
  *         )
  *     ),
- *     @OA\Tag(
- *         name="Documents",
- *     ),
  *     @OA\Server(
  *         description="Doc-Configurator host",
- *         url="http://localhost/api"
+ *         url="https://guehakosu.beget.app/api/"
  *     ),
  * )
  */

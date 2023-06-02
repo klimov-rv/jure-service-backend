@@ -35,6 +35,9 @@ class DocumentController extends Controller
      *             mediaType="application/json",
      *         )
      *     ),
+     *      @OA\Tag(
+     *          name="Documents",
+     *      ),
      * )
      * 
      * Display a listing of the resource.
