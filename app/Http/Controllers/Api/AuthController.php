@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Validator;
  *         )
  *     ),
  *     @OA\Server(
- *         description="Doc-Configurator host",
+ *         description="Doc-Configurator API host",
  *         url="https://guehakosu.beget.app/api/"
  *     ),
  * )
@@ -33,7 +33,50 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    
     /**
+     * 
+     * @OA\Post(
+     *     path="/auth/register",
+     *     operationId="userRegister",
+     *     tags={"Authentication"},
+     *     summary="Register new User",
+     *     @OA\RequestBody(
+     *       required=true,
+     *       description="Login user",
+     *       @OA\MediaType(
+     *           mediaType="multipart/form-data",
+     *           @OA\Schema(
+     * 				type="object",
+     * 				@OA\Property(property="email",type="string"),
+     * 				@OA\Property(property="name",type="string"),
+     * 				@OA\Property(property="password",type="string"),
+     * 				@OA\Property(property="pass_confirm",type="string"),
+     * 			)
+     *       ),
+     * 	   ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Login successed",
+     *         @OA\JsonContent(
+     * 		    	@OA\Schema(
+     * 				    type="object",
+     * 				    @OA\Property(property="token",type="string")
+     * 			    )
+     *         ),
+     *         @OA\XmlContent(
+     * 		    	@OA\Schema(
+     * 				    type="object",
+     * 				    @OA\Property(property="token",type="string")
+     * 			    )
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid username/password supplied"
+     *     ),
+     * )
+     *  
      * Create User
      * @param Request $request
      * @return User 
@@ -42,14 +85,16 @@ class AuthController extends Controller
     {
         try {
             //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
-                'name' => 'required',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+                    'email' => 'required|email|unique:users,email',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -76,8 +121,46 @@ class AuthController extends Controller
             ], 500);
         }
     }
-
-    /**
+/**
+     * @OA\Post(
+     *     path="/auth/login",
+     *     tags={"Authentication"},
+     *     summary="Login to authenticate User",
+     *     operationId="userLogin",
+     *     @OA\RequestBody(
+     *       required=true,
+     *       description="Login user",
+     *       @OA\MediaType(
+     *           mediaType="multipart/form-data",
+     *           @OA\Schema(
+     * 				type="object",
+     * 				@OA\Property(property="email",type="string"),
+     * 				@OA\Property(property="password",type="string"),
+     * 			)
+     *       ),
+     * 	   ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login successed",
+     *         @OA\JsonContent(
+     * 			@OA\Schema(
+     * 				type="object",
+     * 				@OA\Property(property="token",type="string")
+     * 			)
+     * 		),
+     *         @OA\XmlContent(
+     * 			@OA\Schema(
+     * 				type="object",
+     * 				@OA\Property(property="token",type="string")
+     * 			)
+     * 		),
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid email/password supplied"
+     *     ),
+     * )
+     * 
      * Login The User
      * @param Request $request
      * @return User
@@ -85,13 +168,15 @@ class AuthController extends Controller
     public function loginUser(Request $request)
     {
         try {
-            $validateUser = Validator::make($request->all(), 
-            [
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'email' => 'required|email',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -99,7 +184,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            if(!Auth::attempt($request->only(['email', 'password']))){
+            if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',

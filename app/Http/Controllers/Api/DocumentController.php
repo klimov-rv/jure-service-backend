@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\DocumentResource;
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class DocumentController extends Controller
 {
@@ -15,29 +17,28 @@ class DocumentController extends Controller
      *     path="/docs",
      *     operationId="documentsAll",
      *     tags={"Documents"},
-     *     summary="Получить все документы",
+     *     summary="Get all Documents",
      *     security={
      *       {"api_key": {}},
      *     },
-     *     @OA\Parameter(
-     *         name="document",
-     *         in="path",
-     *         description="The document id",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="integer",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Everything is ok",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *              @OA\Schema(
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/Document"),
+     *             )
      *         )
      *     ),
      *     @OA\Response(
-     *         response="200",
-     *         description="Everything is fine",
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *         )
+     *         response="404",
+     *         description="Docs not found",
      *     ),
-     *      @OA\Tag(
-     *          name="Documents",
-     *      ),
+     *     @OA\Tag(
+     *         name="Documents",
+     *     ),
      * )
      * 
      * Display a listing of the resource.
@@ -49,19 +50,26 @@ class DocumentController extends Controller
         return DocumentResource::collection(Document::all());
     }
 
-     /**
+    /**
      * @OA\Post(
      *     path="/docs",
-     *     operationId="documentsCreate",
+     *     operationId="createDocument",
      *     tags={"Documents"},
      *     summary="Create Documents",
      *     security={
      *       {"api_key": {}},
      *     },
      *     @OA\Response(
-     *         response="200",
-     *         description="Everything is fine",
+     *         response="201",
+     *         description="Create Document",
      *     ), 
+     *     @OA\Response(
+     *         response=405,
+     *         description="Invalid input"
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *     ),
      * )
      * Store a newly created resource in storage.
      *
@@ -70,10 +78,49 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TO DO переписать на ресурсы
+        $model = new Document();
+        $model->fill($request->all());
+        $model->save();
+
+        return response()->json($model);
     }
 
-    /**
+
+       /**
+     * @OA\Get(
+     *     path="/docs/{id}",
+     *     operationId="getDocument",
+     *     tags={"Documents"},
+     *     summary="Get document by ID",
+     *     security={
+     *       {"api_key": {}},
+     *     },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="The ID of document",
+     *         required=true,
+     *         example="1",
+     *         @OA\Schema(
+     *             type="integer",
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Everything is ok",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid ID supplier"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="DocTemplate not found"
+     *     ),
+     * )
+     * 
+     * 
      * Display the specified resource.
      *
      * @param  int  $id
@@ -85,6 +132,45 @@ class DocumentController extends Controller
     }
 
     /**
+     * @OA\Put(
+     *     path="/docs/{id}",
+     *     operationId="updateDocument",
+     *     tags={"Documents"},
+     *     summary="Update Document by ID",
+     *     security={
+     *       {"api_key": {}},
+     *     },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="The ID of document",
+     *         required=true,
+     *         example="1",
+     *         @OA\Schema(
+     *             type="integer",
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Everything is ok",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="DocTemplate not found"
+     *     ),
+     *     @OA\Response(
+     *         response=405,
+     *         description="Validation exception"
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *     ),
+     * )
+     *
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -93,10 +179,46 @@ class DocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $params = $request->all();
+        $model  = Document::query()->findOrFail($id);
+        $model->fill($params);
+        $model->save();
 
-    /**
+        return response()->json($model);
+    }
+ /**
+     * @OA\Delete(
+     *     path="/docs/{id}",
+     *     operationId="deleteDocument",
+     *     tags={"Documents"},
+     *     summary="Delete document by ID",
+     *     security={
+     *       {"api_key": {}},
+     *     },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="The ID of document",
+     *         required=true,
+     *         example="1",
+     *         @OA\Schema(
+     *             type="integer",
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="202",
+     *         description="Deleted",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid ID supplied",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Doc not found",
+     *     ),
+     * )
+     *
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -104,6 +226,9 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = Document::query()->findOrFail($id);
+        $model->delete();
+
+        return response(null, HttpResponse::HTTP_ACCEPTED);
     }
 }

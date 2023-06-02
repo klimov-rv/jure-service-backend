@@ -14,34 +14,297 @@
     "servers": [
         {
             "url": "https://guehakosu.beget.app/api/",
-            "description": "Doc-Configurator host"
+            "description": "Doc-Configurator API host"
         }
     ],
     "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register new User",
+                "operationId": "userRegister",
+                "requestBody": {
+                    "description": "Login user",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "pass_confirm": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successed",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            },
+                            "application/xml": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid username/password supplied"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login to authenticate User",
+                "operationId": "userLogin",
+                "requestBody": {
+                    "description": "Login user",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successed",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            },
+                            "application/xml": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid email/password supplied"
+                    }
+                }
+            }
+        },
+        "/doc_templates": {
+            "get": {
+                "tags": [
+                    "DocTemplates"
+                ],
+                "summary": "Get all DocTemplates",
+                "operationId": "getDocTemplates",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DocTemplate"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "DocTemplate not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "DocTemplates"
+                ],
+                "summary": "Get all DocTemplates",
+                "operationId": "42c2795e1196710c0eebd5000e0d3ab3",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DocTemplate"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "DocTemplate not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/doc_templates/{id}": {
+            "get": {
+                "tags": [
+                    "DocTemplates"
+                ],
+                "summary": "Get DocTemplate by ID",
+                "description": "Returns a single DocTemplate",
+                "operationId": "getDocTemplateById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of DocTemplate",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid ID supplier"
+                    },
+                    "404": {
+                        "description": "DocTemplate not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "DocTemplates"
+                ],
+                "summary": "Update an existing DocTemplate by ID",
+                "operationId": "updateDocTemplate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of DocTemplate to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "DocTemplate not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_auth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "DocTemplates"
+                ],
+                "summary": "Deletes a DocTemplate",
+                "operationId": "deleteDocTemplate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "DocTemplate ID to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Deleted"
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "DocTemplate not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
         "/docs": {
             "get": {
                 "tags": [
                     "Documents"
                 ],
-                "summary": "Получить все документы",
+                "summary": "Get all Documents",
                 "operationId": "documentsAll",
-                "parameters": [
-                    {
-                        "name": "document",
-                        "in": "path",
-                        "description": "The document id",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "Everything is fine",
+                        "description": "Everything is ok",
                         "content": {
-                            "application/json": {}
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Document"
+                                    }
+                                }
+                            }
                         }
+                    },
+                    "404": {
+                        "description": "Docs not found"
                     }
                 },
                 "security": [
@@ -55,10 +318,16 @@
                     "Documents"
                 ],
                 "summary": "Create Documents",
-                "operationId": "documentsCreate",
+                "operationId": "createDocument",
+                "requestBody": {
+                    "required": true
+                },
                 "responses": {
-                    "200": {
-                        "description": "Everything is fine"
+                    "201": {
+                        "description": "Create Document"
+                    },
+                    "405": {
+                        "description": "Invalid input"
                     }
                 },
                 "security": [
@@ -67,6 +336,126 @@
                     }
                 ]
             }
+        },
+        "/docs/{id}": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Get document by ID",
+                "operationId": "getDocument",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of document",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Everything is ok"
+                    },
+                    "400": {
+                        "description": "Invalid ID supplier"
+                    },
+                    "404": {
+                        "description": "DocTemplate not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Update Document by ID",
+                "operationId": "updateDocument",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of document",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Everything is ok"
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "DocTemplate not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Delete document by ID",
+                "operationId": "deleteDocument",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of document",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Deleted"
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Doc not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "DocTemplate": {},
+            "Document": {},
+            "User": {}
         }
     }
 }
