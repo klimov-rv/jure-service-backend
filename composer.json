@@ -60,12 +60,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-<<<<<<< HEAD
-            "pestphp/pest-plugin": true,
-            "php-http/discovery": true
-=======
             "pestphp/pest-plugin": true
->>>>>>> 55d3aec4b32309d9898b16cb07eb71f9596e0362
         }
     },
     "minimum-stability": "stable",
