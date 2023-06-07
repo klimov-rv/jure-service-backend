@@ -8,6 +8,7 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
+// use PhpOffice\PhpWord\PhpWord;
 
 class DocumentController extends Controller
 {
@@ -128,7 +129,10 @@ class DocumentController extends Controller
      */
     public function show($id)
     {
-        return new DocumentResource(Document::findOrFail($id));
+        $doc = Document::query()->find($id);
+ 
+        return view('doc.show', ['doc' => $doc, 'id_parameter' => $id]); 
+        // return new DocumentResource(Document::findOrFail($id));
     }
 
     /**
@@ -231,4 +235,17 @@ class DocumentController extends Controller
 
         return response(null, HttpResponse::HTTP_ACCEPTED);
     }
+
+    public function getRTF(Request $request)
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $text = $section->addText($request->get('name'));
+        $text = $section->addText($request->get('text'));
+        $text = $section->addText($request->get('number'),array('name'=>'Arial','size' => 20,'bold' => true)); 
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'RTF');
+        $objWriter->save('getrtf.rtf');
+        return response()->download(public_path('getrtf.rtf'));
+    }
+
 }
