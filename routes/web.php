@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\DocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return view('welcome'); 
+});
+
+Route::get('/doc_configurator', function () { 
     return view('doc_configurator');
 });
+
+Route::get('edit/{doc}', [DocumentController::class, 'show'])->name('doc.edit');
