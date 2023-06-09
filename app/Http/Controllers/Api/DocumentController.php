@@ -131,8 +131,14 @@ class DocumentController extends Controller
     {
         $doc = Document::query()->find($id);
  
-        return view('doc.show', ['doc' => $doc, 'id_parameter' => $id]); 
-        // return new DocumentResource(Document::findOrFail($id));
+        return view('doc.show', ['doc' => $doc, 'id_parameter' => $id]);
+    }
+
+    public function demoshow($id)
+    {
+        $doc = Document::query()->find($id);
+  
+        return new DocumentResource(Document::findOrFail($id));
     }
 
     /**

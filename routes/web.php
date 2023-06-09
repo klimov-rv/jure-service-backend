@@ -22,6 +22,6 @@ Route::get('/doc_configurator', function () {
     return view('doc_configurator');
 });
 
-Route::get('demortfshow/{doc}', [DocumentController::class, 'show'])->name('doc.show');
+Route::get('demortfshow/{doc}', [DocumentController::class, 'demoshow'])->name('doc.show');
 
 Route::post('/getrtf', [DocumentController::class, 'getRTF']);
