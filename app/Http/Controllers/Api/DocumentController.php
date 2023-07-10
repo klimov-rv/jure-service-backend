@@ -88,7 +88,7 @@ class DocumentController extends Controller
     }
 
 
-       /**
+    /**
      * @OA\Get(
      *     path="/docs/{id}",
      *     operationId="getDocument",
@@ -196,7 +196,7 @@ class DocumentController extends Controller
 
         return response()->json($model);
     }
- /**
+    /**
      * @OA\Delete(
      *     path="/docs/{id}",
      *     operationId="deleteDocument",
@@ -253,5 +253,4 @@ class DocumentController extends Controller
         $objWriter->save('getrtf.rtf');
         return response()->download(public_path('getrtf.rtf'));
     }
-
 }
