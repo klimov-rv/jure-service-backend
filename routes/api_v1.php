@@ -17,7 +17,7 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 //             'docs' => DocumentController::class,
 //             'doctemplates' => DocTemplateController::class,
 //     ])
-// );
+// ); 
 
 Route::apiResources([
     'docs' => DocumentController::class,
