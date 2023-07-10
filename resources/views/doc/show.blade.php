@@ -903,7 +903,7 @@
                             <input type="hidden" class="form-control" name="text" value="{{ $doc->text }}">
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                 type="submit">
-                                скачать
+                                скачать RTF
                             </button>
                         </form>
                         <h3 style="font-weight: italic; font-size:25px; margin:15px 0;">{{ $doc->category }}</h3>

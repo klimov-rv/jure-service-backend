@@ -127,11 +127,17 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function demoshow($id)
     {
         $doc = Document::query()->find($id);
  
-        // return view('doc.show', ['doc' => $doc, 'id_parameter' => $id]); 
+        return view('doc.show', ['doc' => $doc, 'id_parameter' => $id]);
+    }
+
+    public function show($id)
+    {
+        $doc = Document::query()->find($id);
+  
         return new DocumentResource(Document::findOrFail($id));
     }
 
