@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Validator;
  *     ),
  *     @OA\Server(
  *         description="Doc-Configurator API host",
- *         url="https://guehakosu.beget.app/api/"
+ *         url="https://guehakosu.beget.app/api/v1/"
  *     ),
  * )
  */
