@@ -1,0 +1,162 @@
+
+ /**
+ * 
+ * @OA\Get(
+ *     path="/docs",
+ *     operationId="documentsAll",
+ *     tags={"Documents"},
+ *     summary="Get all Documents",
+ *     security={
+ *       {"api_key": {}},
+ *     },
+ *     @OA\Response(
+ *         response="200",
+ *         description="Everything is ok",
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *              @OA\Schema(
+ *                 type="array",
+ *                 @OA\Items(ref="#/components/schemas/Document"),
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response="404",
+ *         description="Docs not found",
+ *     ),
+ *     @OA\Tag(
+ *         name="Documents",
+ *     ),
+ * ),
+ * 
+ * @OA\Get(
+ *     path="/docs/{id}",
+ *     operationId="getDocument",
+ *     tags={"Documents"},
+ *     summary="Get document by ID",
+ *     security={
+ *       {"api_key": {}},
+ *     },
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="The ID of document",
+ *         required=true,
+ *         example="1",
+ *         @OA\Schema(
+ *             type="integer",
+ *         ),
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="Everything is ok",
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Invalid ID supplier",
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="DocTemplate not found",
+ *     ),
+ * ),
+ * 
+ * @OA\Post(
+ *     path="/docs",
+ *     operationId="createDocument",
+ *     tags={"Documents"},
+ *     summary="Create Documents",
+ *     security={
+ *       {"api_key": {}},
+ *     },
+ *     @OA\Response(
+ *         response="201",
+ *         description="Create Document",
+ *     ), 
+ *     @OA\Response(
+ *         response=405,
+ *         description="Invalid input"
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                type="object",
+ *                 @OA\Property(property="name",type="string")
+ *             )
+ *         )
+ *     ),
+ * ),
+ * 
+ * @OA\Put(
+ *     path="/docs/{id}",
+ *     operationId="updateDocument",
+ *     tags={"Documents"},
+ *     summary="Update Document by ID",
+ *     security={
+ *       {"api_key": {}},
+ *     },
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="The ID of document",
+ *         required=true,
+ *         example="1",
+ *         @OA\Schema(
+ *             type="integer",
+ *         ),
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="Everything is ok",
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Invalid ID supplied",
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="DocTemplate not found",
+ *     ),
+ *     @OA\Response(
+ *         response=405,
+ *         description="Validation exception",
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *     ),
+ * ),
+ * 
+ * @OA\Delete(
+ *     path="/docs/{id}",
+ *     operationId="deleteDocument",
+ *     tags={"Documents"},
+ *     summary="Delete document by ID",
+ *     security={
+ *       {"api_key": {}},
+ *     },
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="The ID of document",
+ *         required=true,
+ *         example="1",
+ *         @OA\Schema(
+ *             type="integer",
+ *         ),
+ *     ),
+ *     @OA\Response(
+ *         response="202",
+ *         description="Deleted",
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Invalid ID supplied",
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Doc not found",
+ *     ),
+ * ),
+ */

@@ -9,6 +9,125 @@ use App\Http\Resources\DocField\DocFieldResource;
 use App\Models\DocField;
 use Illuminate\Http\Request;
 
+    /**
+     * @OA\Post(
+     *      path="/doc_fields",
+     *      summary="Create",
+     *     security={
+     *       {"api_key": {}},
+     *     },
+     *      tags={"DocField"},
+     * 
+     *      @OA\RequestBody(
+     *         @OA\JsonContent(
+     * 			    allOf={
+     *                  @OA\Schema(
+     * 				        type="object",
+     * 				        @OA\Property(property="doc_field_name", type="string", example="Some field name"),
+     * 				        @OA\Property(property="doc_field_id", type="integer", example=33),
+     *                  )
+     *              }
+     * 	       )
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response="200",
+     *         description="Everything is ok",
+     *          @OA\JsonContent(
+     * 				        type="object",
+     * 				        @OA\Property(property="id", type="integer", example=4),
+     * 				        @OA\Property(property="doc_field_name", type="string", example="Some field name"),
+     * 				        @OA\Property(property="doc_field_id", type="integer", example=33),
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Invalid ID supplier",
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="DocTemplate not found",
+     *     ),
+     * ),
+     * * @OA\Get(
+     *      path="/doc_fields",
+     *      summary="Read", 
+     *      tags={"DocField"}, 
+     *     @OA\Response(
+     *         response="200",
+     *         description="successful operation",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="DocField not found",
+     *     ),
+     * ) 
+     * * @OA\Put(
+     *     path="/doc_fields/{id}",
+     *     operationId="updateDocField",
+     *     tags={"DocField"},
+     *     summary="Update",
+     *     security={
+     *       {"api_key": {}},
+     *     },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="The ID of DocField to update",
+     *         required=true,
+     *         example="1",
+     *         @OA\Schema(
+     *             type="integer",
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="DocField not found"
+     *     ),
+     *     @OA\Response(
+     *         response="405",
+     *         description="Validation exception"
+     *     ),
+     * )
+     * @OA\Delete(
+     *     path="/doc_fields/{id}",
+     *     operationId="deleteDocField",
+     *     tags={"DocField"},
+     *     summary="Delete",
+     *     security={
+     *       {"api_key": {}},
+     *     },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="DocField ID to delete",
+     *         required=true,
+     *         example="1",
+     *         @OA\Schema(
+     *             type="integer",
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="202",
+     *         description="Deleted",
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Invalid ID supplied",
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="DocField not found",
+     *     ),
+     * )
+    */
 class DocFieldController extends Controller
 {
     /**
@@ -44,7 +163,7 @@ class DocFieldController extends Controller
     {
         $data = $request->validated();
 
-        return DocFieldResource::make(DocField::create($data));
+        return DocFieldResource::make(DocField::create($data))->resolve();
     }
 
     /**

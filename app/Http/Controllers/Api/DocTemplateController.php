@@ -125,11 +125,10 @@ class DocTemplateController extends Controller
      * @param  \App\Models\DocTemplate  $DocTemplate
      * @return \Illuminate\Http\Response 
      */
-    public function show(DocTemplate $id)
+    public function show(DocTemplate $DocTemplate)
     {
-        return DocTemplateResource::make($id);
+        return DocTemplateResource::make($DocTemplate);
     }
-
     
     /**
      * @OA\Put(

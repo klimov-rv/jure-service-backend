@@ -9,7 +9,7 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "1.0.0"
+        "version": "1.3.0"
     },
     "servers": [
         {
@@ -110,6 +110,163 @@
                         "description": "Invalid email/password supplied"
                     }
                 }
+            }
+        },
+        "/doc_fields": {
+            "get": {
+                "tags": [
+                    "DocField"
+                ],
+                "summary": "Read",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "DocField not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "DocField"
+                ],
+                "summary": "Create",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "doc_field_name": {
+                                                "type": "string",
+                                                "example": "Some field name"
+                                            },
+                                            "doc_field_id": {
+                                                "type": "integer",
+                                                "example": 33
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Everything is ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 4
+                                        },
+                                        "doc_field_name": {
+                                            "type": "string",
+                                            "example": "Some field name"
+                                        },
+                                        "doc_field_id": {
+                                            "type": "integer",
+                                            "example": 33
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplier"
+                    },
+                    "404": {
+                        "description": "DocTemplate not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/doc_fields/{id}": {
+            "put": {
+                "tags": [
+                    "DocField"
+                ],
+                "summary": "Update",
+                "operationId": "updateDocField",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of DocField to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "DocField not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "DocField"
+                ],
+                "summary": "Delete",
+                "operationId": "deleteDocField",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "DocField ID to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Deleted"
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "DocField not found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/doc_templates": {
@@ -281,178 +438,11 @@
                     }
                 ]
             }
-        },
-        "/docs": {
-            "get": {
-                "tags": [
-                    "Documents"
-                ],
-                "summary": "Get all Documents",
-                "operationId": "documentsAll",
-                "responses": {
-                    "200": {
-                        "description": "Everything is ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Document"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Docs not found"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Documents"
-                ],
-                "summary": "Create Documents",
-                "operationId": "createDocument",
-                "requestBody": {
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Create Document"
-                    },
-                    "405": {
-                        "description": "Invalid input"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key": []
-                    }
-                ]
-            }
-        },
-        "/docs/{id}": {
-            "get": {
-                "tags": [
-                    "Documents"
-                ],
-                "summary": "Get document by ID",
-                "operationId": "getDocument",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The ID of document",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "example": "1"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Everything is ok"
-                    },
-                    "400": {
-                        "description": "Invalid ID supplier"
-                    },
-                    "404": {
-                        "description": "DocTemplate not found"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Documents"
-                ],
-                "summary": "Update Document by ID",
-                "operationId": "updateDocument",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The ID of document",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "example": "1"
-                    }
-                ],
-                "requestBody": {
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Everything is ok"
-                    },
-                    "400": {
-                        "description": "Invalid ID supplied"
-                    },
-                    "404": {
-                        "description": "DocTemplate not found"
-                    },
-                    "405": {
-                        "description": "Validation exception"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Documents"
-                ],
-                "summary": "Delete document by ID",
-                "operationId": "deleteDocument",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The ID of document",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "example": "1"
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Deleted"
-                    },
-                    "400": {
-                        "description": "Invalid ID supplied"
-                    },
-                    "404": {
-                        "description": "Doc not found"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key": []
-                    }
-                ]
-            }
         }
     },
     "components": {
         "schemas": {
+            "DocField": {},
             "DocTemplate": {},
             "Document": {},
             "User": {}

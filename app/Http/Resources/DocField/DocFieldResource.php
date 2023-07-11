@@ -14,6 +14,10 @@ class DocFieldResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'doc_field_name' => $this->doc_field_name, 
+            'doc_field_id' => $this->doc_field_id,
+        ];
     }
 }

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 /**
  * @OA\OpenApi(
  *     @OA\Info(
- *         version="1.0.0",
+ *         version="1.3.0",
  *         title="Doc-Configurator API",
  *         @OA\Contact(
  *             email="admin@example.com"
