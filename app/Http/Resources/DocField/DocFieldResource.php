@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\DocField;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DocumentResource extends JsonResource
+class DocFieldResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +14,6 @@ class DocumentResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'text' => $this->text,
-            'created_at' => $this->created_at->format('d F, Y / H:i'),
-        ];
+        return parent::toArray($request);
     }
 }

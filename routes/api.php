@@ -21,5 +21,5 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
 Route::apiResources([
     'docs' => DocumentController::class,
-    'doc_templates' => DocTemplateController::class,
+    'doc_templates' => DocTemplateController::class,z
 ]); 

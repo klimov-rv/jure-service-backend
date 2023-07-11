@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Route; 
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\DocTemplateController;
+use App\Http\Controllers\Api\DocFieldController;
  
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
@@ -22,4 +23,5 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::apiResources([
     'docs' => DocumentController::class,
     'doc_templates' => DocTemplateController::class,
+    'doc_fields' => DocFieldController::class,
 ]); 

@@ -129,10 +129,10 @@ class DocumentController extends Controller
      * 
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Document  $Document
      * @return \Illuminate\Http\Response
      */
-    public function show(string $id)
+    public function show(Document $id)
     {
         return DocumentResource::findOrFail($id);
     }
@@ -179,7 +179,6 @@ class DocumentController extends Controller
      *
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

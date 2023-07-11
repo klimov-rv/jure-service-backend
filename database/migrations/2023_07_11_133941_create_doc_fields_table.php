@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('doc_fields', function (Blueprint $table) {
             $table->id();
+            $table->string("doc_field_name");
+            $table->integer("doc_field_id");
             $table->timestamps();
         });
     }
