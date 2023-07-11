@@ -18,7 +18,7 @@ class DocumentResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'text' => $this->text,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('d F, Y год. Время: H:i'),
         ];
     }
 }

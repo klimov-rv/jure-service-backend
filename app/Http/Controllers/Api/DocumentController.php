@@ -132,9 +132,9 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(string $id)
     {
-        return new DocumentResource(Document::findOrFail($id));
+        return DocumentResource::findOrFail($id);
     }
 
     /**

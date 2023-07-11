@@ -127,8 +127,7 @@ class DocTemplateController extends Controller
      */
     public function show($id)
     {
-        return [];
-        // return new DocTemplateResource(DocTemplate::with('docs')->findOrFail($id)); 
+        return DocTemplateResource::make($id);
     }
 
     
