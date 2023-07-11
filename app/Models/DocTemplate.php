@@ -15,4 +15,6 @@ class DocTemplate extends Model
     public function docs() {
         return $this->hasMany(Document::class);
     }
+    protected $guarded = false;
+    protected $fillable = ['title'];
 }

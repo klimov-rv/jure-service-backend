@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\DocumentResource;
 use App\Models\Document;
 use Illuminate\Http\Request;
-// use App\Http\Requests\DocumentRequest;
+use App\Http\Requests\DocumentRequest;
 // use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
@@ -72,6 +72,13 @@ class DocumentController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                type="object",
+     *                 @OA\Property(property="name",type="string"),
+     *             )
+     *         )
      *     ),
      * )
      * Store a newly created resource in storage.
@@ -79,7 +86,7 @@ class DocumentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DocumentRequest $request)
     {
         $data = $request->validated();
         $doc = Document::create($data);
@@ -176,7 +183,7 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DocumentRequest $request, $id)
     {
         $data = $request->validated();
         $doc = Document::query()->findOrFail($id);

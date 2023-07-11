@@ -15,6 +15,6 @@ class DocTemplatesSeeder extends Seeder
      */
     public function run()
     {
-        DocTemplate::factory()->count(3)->create();
+        // DocTemplate::factory()->count(3)->create();
     }
 }

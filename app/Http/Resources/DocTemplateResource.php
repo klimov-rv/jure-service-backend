@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\DocumentResource;
 
 class DocTemplateResource extends JsonResource
 {
@@ -16,8 +17,9 @@ class DocTemplateResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'title' => $this->title,
             'created_at' => $this->created_at,
-            'docs' => DocTemplateDocsResource::collection($this->docs),
+            'docs' => DocumentResource::collection($this->docs),
         ];
     }
 }

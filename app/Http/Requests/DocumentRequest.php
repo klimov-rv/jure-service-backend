@@ -23,8 +23,21 @@ class DocumentRequest extends FormRequest
    */
   public function rules()
   {
+    //   POST ожидаем:
+    //   { 
+    //     "id": 1,
+    //     "name": "test111",             // обязательное
+    //     "text": "text55555555",
+    //     "doc_template_id": 1
+    //   }
+    //   PUT / PATCH ожидаем:
+    //   { 
+    //     "id": 1,                       // обязательное из адреса запроса
+    //     "name": "test111 edited",      // обязательное
+    //     "text": "text55555555 edited", 
+    //   }
     $rules = [
-      'name' => 'required|string|unique:id',
+      'name' => 'required|string|unique:documents,name',
       'text' => '',
     ];
 
@@ -33,15 +46,21 @@ class DocumentRequest extends FormRequest
         return $rules;
       case 'PUT':
         return [
-          'id' => 'required|integer|exists:id',
+          'id' => 'required|integer|exists:documents,id',
           'name' => [
             'required',
           ]
         ] + $rules;
-      // case 'PATCH':
+      case 'PATCH':
+        return [
+          'id' => 'required|integer|exists:documents,id',
+          'name' => [
+            'required',
+          ]
+        ] + $rules;
       case 'DELETE':
         return [
-          'id' => 'required|integer|exists:id'
+          'id' => 'required|integer|exists:documents,id'
         ];
     }
   }

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DocTemplateResource;
 use App\Models\DocTemplate;
+use App\Http\Requests\DocTemplateRequest;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class DocTemplateController extends Controller
 {
@@ -41,10 +43,9 @@ class DocTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
-        return DocTemplate::all();
+        return DocTemplateResource::collection(DocTemplate::all());
     }
 
 
@@ -78,9 +79,12 @@ class DocTemplateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DocTemplateRequest $request)
     {
-        //
+        $data = $request->validated();
+        $doc_template = DocTemplate::create($data);
+
+        return DocTemplateResource::make($doc_template);
     }
 
     /**
@@ -123,7 +127,8 @@ class DocTemplateController extends Controller
      */
     public function show($id)
     {
-        return new DocTemplateResource(DocTemplate::with('docs')->findOrFail($id)); 
+        return [];
+        // return new DocTemplateResource(DocTemplate::with('docs')->findOrFail($id)); 
     }
 
     
@@ -168,9 +173,15 @@ class DocTemplateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(DocTemplateRequest $request, $id)
+    { 
+        $data = $request->validated();
+        $doc_template = DocTemplate::query()->findOrFail($id);
+        $doc_template->update($data);
+
+        // $doc = $doc->fresh();
+
+        return DocTemplateResource::make($doc_template);
     }
 
     
@@ -213,6 +224,9 @@ class DocTemplateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = DocTemplate::query()->findOrFail($id);
+        $model->delete();
+
+        return response(null, HttpResponse::HTTP_ACCEPTED);
     }
 }

@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            // TODO relations docTemplates hasMany Documents
-            $table->foreignId('doc_template_id');
+            // TODO relations docTemplates HasMany|BelongsTo Documents
+            $table->foreignId('doc_template_id')->default(1);
             $table->string('name');
-            $table->string('category');
-            $table->text('text');
-            $table->string('status');
+            $table->string('category')->default('category1');
+            $table->text('text')->default('');
+            $table->string('status')->default('new');
             $table->timestamps();
         });
     }
