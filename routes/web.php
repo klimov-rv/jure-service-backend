@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\DocumentController;
-
+use App\Http\Controllers\ConstructorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,13 +15,22 @@ use App\Http\Controllers\Api\DocumentController;
 */
 
 Route::get('/', function () {
-    return view('welcome'); 
+    return view('welcome');
 });
 
-Route::get('/doc_configurator', function () { 
-    return view('doc_configurator');
+Route::get(
+    '/doc_configurator',
+    [ConstructorController::class, 'index']
+    // function () { 
+//     return view('doc_configurator');
+// }
+)->name('doc_configurator');
+
+
+Route::get('/doc_demo', function () { 
+    return view('doc_demo');
 });
 
 Route::get('/demortfshow/{doc}', [DocumentController::class, 'demoshow'])->name('doc.demoshow');
 
-Route::post('/getrtf', [DocumentController::class, 'getRTF']); 
+Route::post('/getrtf', [DocumentController::class, 'getRTF']);

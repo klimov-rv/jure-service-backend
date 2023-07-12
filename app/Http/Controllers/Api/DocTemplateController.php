@@ -54,7 +54,7 @@ class DocTemplateController extends Controller
      * 
      *     path="/doc_templates",
      *     tags={"DocTemplates"},
-     *     summary="Get all DocTemplates",
+     *     summary="Create DocTemplates",
      *     security={
      *       {"api_key": {}},
      *     },
