@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EditorInit;
-use App\Models\Document;
-use AlAminFirdows\LaravelEditorJs\Facades\LaravelEditorJs;
+use App\Models\Document; 
 
 class ConstructorController extends Controller
 { 
@@ -15,8 +14,7 @@ class ConstructorController extends Controller
      */
     public function index()
     {
-        $id = 1;
-        $editorInstance = EditorInit::find($id); 
+        $id = 3; 
         $doc = Document::query()->find($id);
         return view('doc_configurator', ['doc' => $doc, 'id_parameter' => $id]);
     }
