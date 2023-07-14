@@ -59,8 +59,7 @@ if (saveBtn) {
 
 
   const getConstructorData = async (id) => {
-    const { data } = await axios.get(
-      // `http://jure-service2.local/api/v1/posts/${id}`,
+    const { data } = await axios.get( 
       `https://guehakosu.beget.app/api/v1/docs/${id}`,
     )
     return JSON.parse(data.data.text);
@@ -69,8 +68,7 @@ if (saveBtn) {
   getConstructorData(DocConfiguratorApp.doc_id).then(response => {
 
     let imageUploadUrl = saveBtn.dataset.image_upload;
-
-    console.log(DocConfiguratorApp.doc_id);
+ 
     const editor = new EditorJS({
       holder: 'editorjs',
       tools: {
@@ -140,8 +138,7 @@ if (saveBtn) {
 
     }, false);
     const markup = parser.parse(response); 
-    editor_result.innerHTML = markup;
-    console.log(markup);
+    editor_result.innerHTML = markup; 
 
     return markup;
   }).catch(response => { console.log("Error: "); console.log(response) });
