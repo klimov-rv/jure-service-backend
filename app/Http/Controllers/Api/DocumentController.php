@@ -26,11 +26,11 @@ class DocumentController extends Controller
         return DocumentResource::make($doc);
     }
     /**
-    * Display the specified resource.
-    *
-    * @param  \App\Models\Document  $doc
-    * @return \Illuminate\Http\Response 
-    */
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Document  $doc
+     * @return \Illuminate\Http\Response 
+     */
     public function show(Document $doc)
     {
         return DocumentResource::make($doc);
@@ -71,4 +71,69 @@ class DocumentController extends Controller
         $objWriter->save('getrtf.rtf');
         return response()->download(public_path('getrtf.rtf'));
     }
+
+    public function weball()
+    {
+        $docs = Document::all();
+
+        return view('doc_list', compact('docs'));
+    }
+
+    public function webconfig($id)
+    {
+        // $id = 3;
+        $doc = Document::query()->find($id);
+        return view('doc_configurator', ['doc' => $doc, 'id_parameter' => $id]);
+    }
+    
+    public function webdemo($id)
+    {
+        // $id = 3;
+        $doc = Document::query()->find($id);
+        return view('doc_demo', ['doc' => $doc, 'id_parameter' => $id]);
+    } 
+
+    public function create(Request $request)
+    {
+        $validated = $request->validate([
+            'text' => 'required',
+        ]);
+        $post = new Document;
+        $post->text = json_encode($request->text);
+        $post->save();
+
+        $res = ['msg' => 'post saved'];
+
+        return response()->json($res);
+    }
+
+    
+    public function imageUpload(Request $request)
+    {
+        $file = $request->image;
+
+        $fileNameWithExt = $file->getClientOriginalName();
+
+        $file_name = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+        $file_extension = $file->getClientOriginalExtension();
+
+        $file_name_to_store = $file_name . '_' . time() . '.' . $file_extension;
+
+        $file_store_path = $file->storeAs('upload/images/testfolder', $file_name_to_store);
+
+        $file_preview_path = '/storage/app/upload/images/testfolder/' . $file_name_to_store;
+
+        $resp = array(
+            'success' => 1,
+            'file' => (object) array(
+                'url' => $file_preview_path,
+                'stored_path' => $file_store_path,
+                // any other image data - width, height, color, extension, etc
+            )
+        );
+
+        return response()->json($resp);
+    }
+
 }

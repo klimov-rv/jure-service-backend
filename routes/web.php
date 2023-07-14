@@ -18,19 +18,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get(
-    '/doc_configurator',
-    [ConstructorController::class, 'index']
-    // function () { 
-//     return view('doc_configurator');
-// }
-)->name('doc_configurator');
+// TODO структурировать и выделить методы эдитора в модель док-конструктора Constructor 
+Route::get('/doc_configurator', [DocumentController::class, 'webconfig']  )->name('doc_configurator');
+Route::get('/doc_configurator/{doc}', [DocumentController::class, 'webconfig'])->name('doc_configurator');
+Route::get('/doc_demo/{doc}', [DocumentController::class, 'webdemo'])->name('doc_demo'); 
+Route::any('/doc_list', [DocumentController::class, 'weball'])->name('doc_list');
+Route::post('/doc/create', [DocumentController::class, 'create'])->name('doc.create');
 
-
-Route::get('/doc_demo', function () { 
-    return view('doc_demo');
-});
+Route::any('/test-image-upload', [DocumentController::class, 'imageUpload'])->name('image.upload');
 
 Route::get('/demortfshow/{doc}', [DocumentController::class, 'demoshow'])->name('doc.demoshow');
-
 Route::post('/getrtf', [DocumentController::class, 'getRTF']);
+
+ 
