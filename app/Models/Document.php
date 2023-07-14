@@ -12,7 +12,11 @@ class Document extends Model
 {
     use HasFactory;
 
-    
+    public function doc_template()
+    {
+        return $this->belongsTo(DocTemplate::class);
+    }
+
     protected $guarded = false;
     protected $fillable = ['name'];
 }

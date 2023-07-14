@@ -28,12 +28,12 @@ class DocumentController extends Controller
     /**
     * Display the specified resource.
     *
-    * @param  \App\Models\DocTemplate  $DocTemplate
+    * @param  \App\Models\Document  $doc
     * @return \Illuminate\Http\Response 
     */
-    public function show(Document $DocTemplate)
+    public function show(Document $doc)
     {
-        return DocumentResource::make($DocTemplate);
+        return DocumentResource::make($doc);
     }
 
     public function update(DocumentRequest $request, $id)

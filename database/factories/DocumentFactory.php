@@ -21,7 +21,7 @@ class DocumentFactory extends Factory
         return [   
             'name' => $this->faker->name, 
             'category' => $this->faker->name,
-            'text' => $this->faker->text(9999),
+            'text' => $this->faker->text(3000),
             'status' => $this->faker->name,
             'doc_template_id' => 1,
         ];
